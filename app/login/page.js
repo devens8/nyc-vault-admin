@@ -33,7 +33,7 @@ function LoginInner() {
   return (
     <main className="auth">
       <div className="auth-card">
-        <p className="auth-kicker">● NYC Vault · Admin</p>
+        <p className="auth-kicker">● Little Spots NYC · Admin</p>
         <h1>Admin sign in</h1>
         <p className="auth-sub">
           Restricted to superadmin accounts. Sign in with the Google account

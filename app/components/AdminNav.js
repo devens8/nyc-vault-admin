@@ -12,7 +12,7 @@ export default async function AdminNav() {
         <Link href="/" className="nav-brand">
           <span className="nav-lock" aria-hidden="true">⬡</span>
           <span className="nav-wordmark">
-            NYC<span className="nav-dot">·</span>VAULT
+            LITTLE<span className="nav-dot">·</span>SPOTS
           </span>
           <span className="nav-badge">ADMIN</span>
         </Link>

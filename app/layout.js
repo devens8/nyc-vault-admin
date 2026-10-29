@@ -14,8 +14,8 @@ const sans = Inter({
 });
 
 export const metadata = {
-  title: { default: "NYC Vault Admin", template: "%s · NYC Vault Admin" },
-  description: "Superadmin console for the NYC Vault database.",
+  title: { default: "Little Spots NYC Admin", template: "%s · Little Spots NYC Admin" },
+  description: "Superadmin console for the Little Spots NYC database.",
   robots: { index: false, follow: false },
 };
 

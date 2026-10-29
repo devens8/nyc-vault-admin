@@ -149,7 +149,7 @@ export default async function Overview() {
       <header className="page-header">
         <h1>Overview</h1>
         <p className="subtitle">
-          What&apos;s happening in NYC Vault: what the AI is suggesting, and what
+          What&apos;s happening in Little Spots NYC: what the AI is suggesting, and what
           the community thinks of it.
         </p>
       </header>

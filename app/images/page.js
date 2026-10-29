@@ -36,7 +36,7 @@ export default async function ImagesPage() {
         <h1>Images</h1>
         <p className="subtitle">
           Everything in the <code>{BUCKET}</code> storage bucket: profile photos
-          members upload in NYC Vault, plus images uploaded here. Replacing an
+          members upload in Little Spots NYC, plus images uploaded here. Replacing an
           image keeps its URL, so profiles that use it update automatically.
         </p>
       </header>
