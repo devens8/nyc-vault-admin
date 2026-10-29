@@ -17,8 +17,6 @@ export default async function AdminNav() {
           <span className="nav-badge">ADMIN</span>
         </Link>
 
-        {isAdmin && <NavLinks />}
-
         {user && (
           <div className="nav-access">
             <span className="nav-user" title={user.email}>
@@ -32,6 +30,7 @@ export default async function AdminNav() {
           </div>
         )}
       </div>
+      {isAdmin && <NavLinks />}
     </header>
   );
 }

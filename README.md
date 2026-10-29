@@ -12,6 +12,23 @@ Separate repo and Vercel project; same Supabase database.
 | **AI media** | `/media`, `/media/new`, `/media/[id]` | **Create** (generate with Gemini using the app's prompt, or write by hand), **read** (search, sort by score/votes/name), **update** (name, area, vibe, blurb), **delete** (with confirm; votes and saves cascade). The detail page shows the stored prompt and every vote on the item. |
 | **Users** | `/users`, `/users/[id]` | **Read** every profile with role, spots added, score earned, votes given, saves, join date, last sign-in; per-user detail with their spots and votes. |
 | **Votes** | `/votes` | **Read** every upvote/downvote with voter, spot and time; filter up/down. |
+| **Images** | `/images` | **Create** (upload), **read**, **update** (replace in place, URL kept), **delete** every image in the `avatars` storage bucket. Shows which member's profile photo each one is. |
+| **Prompt chains** | `/chains` | **Read** each chain, its steps (model, prompt template, output type), mix share, runs and success rate. |
+| **Chain mix** | `/mix` | **Read/update** the weights that decide which chain a new generation uses (A/B testing). |
+| **Terms** | `/terms` | **CRUD** the NYC slang glossary injected into prompts as `{{terms}}`. |
+| **Examples** | `/examples` | **CRUD** few-shot dossier examples injected as `{{examples}}` (active only). |
+| **Requests** | `/requests`, `/requests/[id]` | **Read** every generation request (who, what, chain, status, latency, result) and its full LLM call trace. |
+| **LLM responses** | `/responses` | **Read** every model call: prompt, raw output, tokens, latency, retries; per-model rollup. |
+| **LLM models / providers** | `/models`, `/providers` | **CRUD**. Deleting something still in use is blocked with an explanation. |
+| **Signup domains / whitelist** | `/domains`, `/whitelist` | **CRUD** who may sign in to the main app (domain match or exact email). |
+
+The prompt/LLM tables are defined in the main repo's `supabase/llm.sql`. The
+main app's generator (`lib/pipeline.js`, copied here for the AI create button)
+reads chains, models, terms and examples from them and logs every request and
+LLM call, so the admin edits change real generations. The six simple tables
+share one generic CRUD screen (`lib/resources.js`, `lib/resourceActions.js`,
+`app/components/ResourcePage.js`); the server actions only write tables and
+columns listed in that registry.
 
 ## Security model
 

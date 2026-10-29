@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { adminOrError } from "@/lib/auth";
-import { generateDossier } from "@/lib/gemini";
+import { runGeneration } from "@/lib/pipeline";
 
 const LIMITS = { place_name: 120, neighborhood: 60, category: 40, blurb: 1200, prompt: 4000 };
 
@@ -50,7 +50,8 @@ export async function createManual(prevState, formData) {
   redirect(`/media/${data.id}?created=1`);
 }
 
-// CREATE (AI): same Gemini pipeline the main app uses, attributed to the admin.
+// CREATE (AI): same DB-driven pipeline the main app uses (prompt chain mix,
+// terms, examples), attributed to the admin and logged as source "admin".
 export async function createWithAI(prevState, formData) {
   const auth = await adminOrError();
   if (auth.error) return { ok: false, message: auth.error };
@@ -61,9 +62,9 @@ export async function createWithAI(prevState, formData) {
 
   let dossier;
   try {
-    dossier = await generateDossier({ ...fields, notes });
+    dossier = await runGeneration(auth.db, { userId: auth.user.id, source: "admin", ...fields, notes });
   } catch (err) {
-    console.error("generateDossier failed:", err);
+    console.error("runGeneration failed:", err);
     return { ok: false, message: `AI generation failed: ${err.message}` };
   }
 
@@ -80,7 +81,11 @@ export async function createWithAI(prevState, formData) {
     })
     .select("id")
     .single();
-  if (dbError) return { ok: false, message: dbError.message };
+  if (dbError) {
+    await dossier.finish({ status: "failed", error: `Save failed: ${dbError.message}` });
+    return { ok: false, message: dbError.message };
+  }
+  await dossier.finish({ status: "succeeded", generation_id: data.id });
 
   revalidateAll();
   redirect(`/media/${data.id}?created=1`);
