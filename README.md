@@ -12,7 +12,6 @@ Separate repo and Vercel project; same Supabase database.
 | **AI media** | `/media`, `/media/new`, `/media/[id]` | **Create** (generate with Gemini using the app's prompt, or write by hand), **read** (search, sort by score/votes/name), **update** (name, area, vibe, blurb), **delete** (with confirm; votes and saves cascade). The detail page shows the stored prompt and every vote on the item. |
 | **Users** | `/users`, `/users/[id]` | **Read** every profile with role, spots added, score earned, votes given, saves, join date, last sign-in; per-user detail with their spots and votes. |
 | **Votes** | `/votes` | **Read** every upvote/downvote with voter, spot and time; filter up/down. |
-| **Images** | `/images` | **Create** (upload), **read**, **update** (replace in place, URL kept), **delete** every image in the `avatars` storage bucket. Shows which member's profile photo each one is. |
 | **Prompt chains** | `/chains` | **Read** each chain, its steps (model, prompt template, output type), mix share, runs and success rate. |
 | **Chain mix** | `/mix` | **Read/update** the weights that decide which chain a new generation uses (A/B testing). |
 | **Terms** | `/terms` | **CRUD** the NYC slang glossary injected into prompts as `{{terms}}`. |
@@ -21,6 +20,11 @@ Separate repo and Vercel project; same Supabase database.
 | **LLM responses** | `/responses` | **Read** every model call: prompt, raw output, tokens, latency, retries; per-model rollup. |
 | **LLM models / providers** | `/models`, `/providers` | **CRUD**. Deleting something still in use is blocked with an explanation. |
 | **Signup domains / whitelist** | `/domains`, `/whitelist` | **CRUD** who may sign in to the main app (domain match or exact email). |
+| **User permissions** | `/permissions` | **Read/update** who is an admin (grant/revoke). You can't change your own role and the last admin can't be removed. |
+| **Bug reports** | `/bugs` | **Read/update/delete** reports members file from the main site's "Report a bug" footer button: filter by status, set status + internal notes. The sidebar shows the open count. |
+
+Navigation is a left sidebar of collapsible categories: Overview, Clients,
+User permissions, Access, Prompts, LLM and Bugs.
 
 The prompt/LLM tables are defined in the main repo's `supabase/llm.sql`. The
 main app's generator (`lib/pipeline.js`, copied here for the AI create button)
@@ -58,9 +62,8 @@ column grants:
 update public.profiles set is_superadmin = true where email = 'you@example.com';
 ```
 
-The Supabase SQL editor or the service-role key work too. The admin app itself
-deliberately has **no** "make admin" button, so granting admin always needs
-database-level access.
+The Supabase SQL editor or the service-role key work too. After that, existing admins can grant
+or revoke admin for other people under **User permissions**.
 
 ## Google sign-in on this domain
 

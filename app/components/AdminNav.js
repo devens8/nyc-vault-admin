@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { getAdminStatus } from "@/lib/auth";
-import NavLinks from "./NavLinks";
 
+// Top bar: brand, who's signed in, sign out. Navigation lives in the sidebar.
 export default async function AdminNav() {
-  const { user, isAdmin, profile } = await getAdminStatus();
+  const { user, profile } = await getAdminStatus();
   const name = profile?.first_name || user?.email;
 
   return (
@@ -30,7 +30,6 @@ export default async function AdminNav() {
           </div>
         )}
       </div>
-      {isAdmin && <NavLinks />}
     </header>
   );
 }

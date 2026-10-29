@@ -27,7 +27,7 @@ export default async function UserDetailPage({ params }) {
     <main className="page">
       <header className="page-header">
         <Link href="/users" className="back-link">
-          ← Users
+          ← Clients
         </Link>
         <div className="user-cell user-cell--lg">
           {profile.avatar_url ? (

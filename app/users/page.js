@@ -3,7 +3,7 @@ import { requireAdmin } from "@/lib/auth";
 import { displayName, fmtDate, loadAll, tallyByGeneration } from "@/lib/data";
 
 export const dynamic = "force-dynamic";
-export const metadata = { title: "Users" };
+export const metadata = { title: "Clients" };
 
 export default async function UsersPage({ searchParams }) {
   const params = await searchParams;
@@ -35,10 +35,10 @@ export default async function UsersPage({ searchParams }) {
   return (
     <main className="page">
       <header className="page-header">
-        <h1>Users</h1>
+        <h1>Clients</h1>
         <p className="subtitle">
-          Every member profile, with what they&apos;ve contributed. Read-only.
-          Admin access can only be granted directly in the database.
+          Everyone who uses Little Spots NYC (their profiles), with what
+          they&apos;ve contributed. Manage admin access under User permissions.
         </p>
       </header>
 

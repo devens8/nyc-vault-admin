@@ -1,6 +1,7 @@
 import { IBM_Plex_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import AdminNav from "./components/AdminNav";
+import AdminSidebar from "./components/AdminSidebar";
 
 const mono = IBM_Plex_Mono({
   subsets: ["latin"],
@@ -24,7 +25,10 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={`${mono.variable} ${sans.variable}`}>
         <AdminNav />
-        {children}
+        <div className="shell">
+          <AdminSidebar />
+          <div className="shell-main">{children}</div>
+        </div>
       </body>
     </html>
   );
