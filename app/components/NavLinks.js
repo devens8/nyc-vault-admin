@@ -4,6 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
+const CHAIN_STUDIO_URL = "https://little-spots-chains.vercel.app";
+
 const GROUPS = [
   {
     label: "Overview",
@@ -25,6 +27,7 @@ const GROUPS = [
   {
     label: "Prompts",
     links: [
+      { href: CHAIN_STUDIO_URL, label: "Chain Studio ↗", external: true },
       { href: "/chains", label: "Prompt chains" },
       { href: "/mix", label: "Chain mix" },
       { href: "/terms", label: "Terms" },
@@ -101,6 +104,9 @@ export default function NavLinks({ counts = {} }) {
                 <ul id={id} className="side-links">
                   {g.links.map((l) => (
                     <li key={l.href}>
+                      {l.external ? (
+                        <a href={l.href}>{l.label}</a>
+                      ) : (
                       <Link
                         href={l.href}
                         className={isActive(l.href) ? "active" : ""}
@@ -109,6 +115,7 @@ export default function NavLinks({ counts = {} }) {
                         {l.label}
                         {l.badge && counts[l.badge] > 0 && <span className="side-badge">{counts[l.badge]}</span>}
                       </Link>
+                      )}
                     </li>
                   ))}
                 </ul>

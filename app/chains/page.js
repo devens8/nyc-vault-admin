@@ -35,9 +35,14 @@ export default async function ChainsPage() {
             <code>{"{{examples}}"}</code> come from the Terms and Examples tables.
           </p>
         </div>
-        <Link href="/mix" className="secondary-btn">
-          Edit mix
-        </Link>
+        <div className="row-actions">
+          <a href="https://little-spots-chains.vercel.app" className="secondary-btn">
+            Edit in Chain Studio ↗
+          </a>
+          <Link href="/mix" className="secondary-btn">
+            Edit mix
+          </Link>
+        </div>
       </header>
 
       {chains.data.map((c) => {

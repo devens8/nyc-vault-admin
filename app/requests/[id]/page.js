@@ -82,6 +82,12 @@ export default async function RequestDetail({ params }) {
         </dl>
       </section>
 
+      <p>
+        <a href={`https://little-spots-chains.vercel.app/runs/${r.id}`} className="secondary-btn">
+          Open full trace in Chain Studio ↗
+        </a>
+      </p>
+
       <h2 className="section-title">LLM calls ({calls?.length ?? 0})</h2>
       <ol className="steps">
         {(calls ?? []).map((c) => (
